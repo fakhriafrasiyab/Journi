@@ -1,8 +1,6 @@
 package com.journi.challenge.controllers;
 
-import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
-import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

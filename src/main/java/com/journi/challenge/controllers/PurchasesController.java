@@ -23,13 +23,14 @@ public class PurchasesController {
 
     @PostMapping("/purchases")
     public Purchase save(@RequestBody PurchaseRequest purchaseRequest) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Purchase newPurchase = new Purchase(
                 purchaseRequest.getInvoiceNumber(),
-                LocalDateTime.parse(purchaseRequest.getDateTime(), DateTimeFormatter.ISO_DATE_TIME),
+                LocalDateTime.parse(purchaseRequest.getDateTime(), formatter),
                 purchaseRequest.getProductIds(),
                 purchaseRequest.getCustomerName(),
-                purchaseRequest.getAmount()
-        );
+                purchaseRequest.getAmount(),
+                purchaseRequest.getCurrencyCode());
         purchasesRepository.save(newPurchase);
         return newPurchase;
     }

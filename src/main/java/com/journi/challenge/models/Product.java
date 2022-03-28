@@ -9,16 +9,22 @@ public class Product {
 
     private final String id;
     private final String description;
-    private final Double price;
+    private Double price;
+    private String currencyCode;
 
-    public Product(String id, String description, Double price) {
+    public Product(String id, String description, Double price, String currencyCode) {
         this.id = id;
         this.description = description;
         this.price = price;
+        this.currencyCode = currencyCode;
     }
 
     public String getId() {
         return id;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
     }
 
     public String getDescription() {
@@ -29,4 +35,11 @@ public class Product {
         return price;
     }
 
+    public void setPrice(Double price){
+        this.price=price;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 }

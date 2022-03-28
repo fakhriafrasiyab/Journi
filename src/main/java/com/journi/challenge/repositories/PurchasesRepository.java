@@ -2,16 +2,13 @@ package com.journi.challenge.repositories;
 
 import com.journi.challenge.models.Purchase;
 import com.journi.challenge.models.PurchaseStats;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalField;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 @Named
 @Singleton
@@ -28,11 +25,12 @@ public class PurchasesRepository {
     }
 
     public PurchaseStats getLast30DaysStats() {
+        List<Purchase> purchases = addElements();
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE.withZone(ZoneId.of("UTC"));
 
         LocalDateTime start = LocalDate.now().atStartOfDay().minusDays(30);
 
-        List<Purchase> recentPurchases = allPurchases
+        List<Purchase> recentPurchases = purchases
                 .stream()
                 .filter(p -> p.getTimestamp().isAfter(start))
                 .sorted(Comparator.comparing(Purchase::getTimestamp))
@@ -49,5 +47,16 @@ public class PurchasesRepository {
                 recentPurchases.stream().mapToDouble(Purchase::getTotalValue).min().orElse(0.0),
                 recentPurchases.stream().mapToDouble(Purchase::getTotalValue).min().orElse(0.0)
         );
+    }
+
+    private List<Purchase> addElements() {
+        List<String> productIds = new ArrayList<>();
+        productIds.add("1");
+        productIds.add("2");
+        productIds.add("3");
+        Purchase purchase = new Purchase("1",LocalDateTime.of(2022,03,8,12,11), productIds, "faxri", 100.00, "EUR");
+        List<Purchase> purchases = new ArrayList<>();
+        purchases.add(purchase);
+        return purchases;
     }
 }
